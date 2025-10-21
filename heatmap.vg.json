@@ -1,0 +1,116 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 800,
+  "height": 550,
+  "data": {
+    "url": "https://raw.githubusercontent.com/juzlemmeusethisname/FIT3179-DV2/refs/heads/main/heatmap_dataset.csv"
+  },
+  "params": [
+    {
+      "name": "genreSelection",
+      "select": {
+        "type": "point",
+        "fields": ["Genre"],
+        "on": "click"
+      }
+    }
+  ],
+  "mark": {
+    "type": "rect",
+    "tooltip": true,
+    "stroke": "white",
+    "strokeWidth": 2,
+    "cornerRadius": 2,
+    "cursor": "pointer"
+  },
+  "encoding": {
+    "x": {
+      "field": "Decade",
+      "type": "ordinal",
+      "title": "Decade",
+      "axis": {
+        "labelAngle": 0,
+        "labelFontSize": 11,
+        "titleFontSize": 14,
+        "labelPadding": 5,
+        "format": "d"
+      }
+    },
+    "y": {
+      "field": "Genre",
+      "type": "nominal",
+      "title": "Genre",
+      "sort": "-x",
+      "axis": {
+        "labelFontSize": 11,
+        "titleFontSize": 14,
+        "labelLimit": 200
+      }
+    },
+    "color": {
+      "field": "Count",
+      "type": "quantitative",
+      "title": "Books Published",
+      "scale": {
+        "scheme": "purples",
+        "type": "log",
+        "domainMin": 1
+      },
+      "legend": {
+        "titleFontSize": 12,
+        "labelFontSize": 11,
+        "orient": "right",
+        "gradientLength": 300,
+        "format": ","
+      }
+    },
+    "opacity": {
+      "condition": {
+        "param": "genreSelection",
+        "value": 1
+      },
+      "value": 0.2
+    },
+    "tooltip": [
+      {
+        "field": "Decade",
+        "type": "ordinal",
+        "title": "Decade",
+        "format": "d"
+      },
+      {
+        "field": "Genre",
+        "type": "nominal",
+        "title": "Genre"
+      },
+      {
+        "field": "Count",
+        "type": "quantitative",
+        "title": "Books Published",
+        "format": ","
+      },
+      {
+        "field": "Percentage",
+        "type": "quantitative",
+        "title": "Percentage of Decade",
+        "format": ".1f"
+      },
+      {
+        "field": "Growth",
+        "type": "quantitative",
+        "title": "Growth over Previous Decade",
+        "format": "+.1f"
+      }
+    ]
+  },
+  "config": {
+    "view": {
+      "stroke": "transparent"
+    },
+    "axis": {
+      "labelColor": "#475569",
+      "titleColor": "#1e293b",
+      "domainColor": "#cbd5e1"
+    }
+  }
+}

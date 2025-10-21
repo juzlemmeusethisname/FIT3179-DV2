@@ -1,0 +1,205 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Distribution of Readers Ages",
+    "fontSize": 20,
+    "fontWeight": "bold",
+    "anchor": "start",
+    "subtitleFontSize": 14,
+    "subtitleColor": "#666"
+  },
+  "data": {
+    "url": "https://raw.githubusercontent.com/juzlemmeusethisname/FIT3179-DV2/refs/heads/main/histogram_dataset.csv",
+    "format": {"type": "csv"}
+  },
+  "width": 1000,
+  "height": 450,
+  "layer": [
+    {
+      "transform": [
+        {
+          "bin": {"maxbins": 20},
+          "field": "Age",
+          "as": "binned_Age"
+        },
+        {
+          "aggregate": [{"op": "count", "as": "user_count"}],
+          "groupby": ["binned_Age", "binned_Age_end"]
+        },
+        {
+          "joinaggregate": [
+            {"op": "max", "field": "user_count", "as": "max_count"}
+          ]
+        },
+        {
+          "calculate": "datum.user_count === datum.max_count ? 'Most Common Age Range' : 'Other Ranges'",
+          "as": "highlight_flag"
+        },
+        {
+          "calculate": "format(datum.binned_Age, '.0f') + '-' + format(datum.binned_Age_end, '.0f')",
+          "as": "age_range_combined"
+        }
+      ],
+      "mark": {
+        "type": "bar",
+        "tooltip": true,
+        "stroke": "#fff",
+        "strokeWidth": 1
+      },
+      "encoding": {
+        "x": {
+          "field": "binned_Age",
+          "type": "quantitative",
+          "bin": "binned",
+          "title": "Age (Years)",
+          "axis": {
+            "labelFontSize": 13,
+            "titleFontSize": 15,
+            "titleFontWeight": "bold",
+            "titlePadding": 10,
+            "grid": false
+          }
+        },
+        "x2": {"field": "binned_Age_end"},
+        "y": {
+          "field": "user_count",
+          "type": "quantitative",
+          "title": "Number of Users",
+          "axis": {
+            "labelFontSize": 13,
+            "titleFontSize": 15,
+            "titleFontWeight": "bold",
+            "titlePadding": 10,
+            "gridOpacity": 0.3
+          }
+        },
+        "color": {
+          "field": "highlight_flag",
+          "type": "nominal",
+          "scale": {
+            "domain": ["Most Common Age Range", "Other Ranges"],
+            "range": ["#A272EF", "#94A3B8"]
+          },
+          "legend": {
+            "title": null,
+            "orient": "none",
+            "labelFontSize": 12,
+            "symbolSize": 200,
+            "padding": 10,
+            "direction": "vertical",
+            "legendX": 830,
+            "legendY": -10
+          }
+        },
+        "opacity": {
+          "condition": {
+            "test": "datum.highlight_flag === 'Most Common Age Range'",
+            "value": 1
+          },
+          "value": 0.7
+        },
+        "tooltip": [
+          {
+            "field": "age_range_combined",
+            "title": "Age Range",
+            "type": "nominal"
+          },
+          {
+            "field": "user_count",
+            "title": "Total Users",
+            "format": ","
+          }
+        ]
+      }
+    },
+    {
+      "transform": [
+        {
+          "aggregate": [{"op": "mean", "field": "Age", "as": "mean_age"}]
+        }
+      ],
+      "mark": {
+        "type": "rule",
+        "strokeDash": [8, 4],
+        "size": 2,
+        "color": "#6a6a6a"
+      },
+      "encoding": {
+        "x": {
+          "field": "mean_age",
+          "type": "quantitative"
+        }
+      }
+    },
+    {
+      "transform": [
+        {
+          "aggregate": [{"op": "mean", "field": "Age", "as": "mean_age"}]
+        },
+        {
+          "calculate": "'Mean Age: ' + format(datum.mean_age, '.1f') + ' years'",
+          "as": "mean_label"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 5,
+        "dy": -10,
+        "fontSize": 12,
+        "fontWeight": "normal",
+        "color": "#6a6a6a"
+      },
+      "encoding": {
+        "x": {
+          "field": "mean_age",
+          "type": "quantitative"
+        },
+        "y": {"value": 20},
+        "text": {"field": "mean_label"}
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "right",
+        "baseline": "middle",
+        "dx": -10,
+        "fontSize": 13,
+        "fontWeight": "normal",
+        "font": "Verdana",
+        "color": "#060d0b"
+      },
+      "encoding": {
+        "x": {"value": 635},
+        "y": {"value": 100},
+        "text": {"value": "65+ represents only 2.3% of users"}
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "baseline": "middle",
+        "dx": 10,
+        "fontSize": 13,
+        "fontWeight": "normal",
+        "font": "Verdana",
+        "color": "#060d0b"
+      },
+      "encoding": {
+        "x": {"value": 383},
+        "y": {"value": 80},
+        "text": {"value": "Millennials dominate the user base (59%)"}
+      }
+    }
+  ],
+  "config": {
+      "view": {"stroke": "transparent"},
+      "axis": {
+        "labelColor": "#475569",
+        "titleColor": "#1e293b",
+        "domainColor": "#cbd5e1"
+    }
+  } 
+}

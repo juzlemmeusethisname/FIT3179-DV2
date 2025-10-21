@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Data Visualisation 2</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+
+  <script src="histogram.js"></script> 
+  <script src="homework_week_10.js"></script> 
+  <script src="homework_week_9.js"></script> 
+  <script src="heatmap.js"></script> 
+
+<style>
+  body {
+    font-family: "Segoe UI", sans-serif;
+    margin: 0 auto;
+    padding: 40px 20px;
+    max-width: 1400px; 
+    width: 100%;
+    background: #f8fcff;
+  }
+
+  h1 {
+    margin-top: 0;
+    text-align: center;
+    font-size: 60px;
+    font-family: Georgia, serif;
+  }
+
+  .chart-container {
+    display: flex;
+    flex-direction: column; 
+    align-items: center;    
+    gap: 40px;
+    margin: 30px auto;
+    width: 100%;
+    max-width: 1400px;
+  }
+
+  .chart {
+    width: 100%;              
+    max-width: 1300px;
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    align-items: flex-start;
+    justify-content: center;
+    margin: 0 auto;
+  }
+
+  .chart-viz {
+    flex-shrink: 0;
+    background: #f8fcff;
+  }
+
+  .chart-description {
+    flex: 0 0 400px;
+    min-width: 400px;
+    max-width: 400px;
+  }
+
+  .chart h2 {
+    font-family: Georgia, serif;
+    font-size: 24px;
+    margin-bottom: 8px;
+    margin-top: 0;
+    text-align: left;
+  }
+
+  .chart p {
+    line-height: 1.8;
+    text-align: justify;
+    text-justify: inter-word;
+    margin: 0;
+    hyphens: auto;
+    word-spacing: 0.1em;
+    font-size: 20px;
+  }
+
+    .footer {
+    margin-top: 60px;
+    padding-top: 30px;
+    border-top: 2px solid #cbd5e1;
+    text-align: left;
+    font-size: 13px;
+    color: #64748b;
+    line-height: 1.6;
+  }
+
+  .footer p {
+    margin: 8px 0;
+  }
+
+  .footer a {
+    color: #3b82f6;
+    text-decoration: none;
+  }
+
+  .footer a:hover {
+    text-decoration: underline;
+  }
+
+  .footer strong {
+    color: #1e293b;
+  }
+
+</style>
+
+</head>
+
+<body>
+  <div class="page-wrapper">
+    <h1> Global Book Ratings and Reading Culture </h1>
+    
+  <div class="chart-container">
+    <div class="chart">
+      <div class="chart-viz">
+        <div id="histogram_reader"></div>
+      </div>
+      <div class="chart-description">
+        <h2>User Age Distribution</h2>
+        <p><b>Most readers fall between the ages of 20 and 35</b>, making young adults the most active participants in online book reviewing platforms. Engagement <b>declines steadily with age</b>, particularly after 50, suggesting that older groups participate less in digital reading communities. The strong concentration of users in their 20s and early 30s reflects a <b>tech-savvy, digitally engaged demographic</b> driving modern reading trends. Lower participation among seniors may reflect <b>less digital adoption</b>, rather than less interest in reading itself.</p>
+      </div>
+    </div>
+    
+    <div class="chart">
+      <div class="chart-viz">
+        <div id="publisher_chart"></div>
+      </div>
+      <div class="chart-description">
+        <h2>Top Publishers by Rating</h2>
+        <p><b>Major publishers' average ratings evolved from 1950 to 2010</b>. Early decades show <b>sharp fluctuations</b>, suggesting inconsistent publishing quality or limited reviewer participation. From the 1980s onward, ratings <b>stabilise between 7–8</b>, reflecting improved industry standards and broader readership. Occasional peaks, such as <b>"Perfect 10" ratings in the 1970s</b>, mark standout publications that resonated deeply with readers. By the 2000s, publisher lines <b>converge</b>, indicating a global levelling of quality standards. Overall, this chart captures the <b>publishing industry's gradual move toward consistent quality and credibility</b> over time.</p>
+      </div>
+    </div>
+    
+    <div class="chart">
+      <div class="chart-viz">
+        <div id="map_chart"></div>
+      </div>
+      <div class="chart-description">
+        <h2>Global Book Distribution Map</h2>
+        <p>Regions like <b>South America and Africa display higher average ratings</b>, indicating more active reviewing communities and engaged reading cultures. This reflects <b>consistent participation</b> and a strong sense of literary enthusiasm in these areas. In contrast, lighter regions such as <b>Australia and parts of Asia</b> may indicate fewer reviews or more critical readers. By comparing scores geographically, the map reveals <b>cultural differences in rating behaviour</b> and highlights where global reading communities are most vibrant. Some regions rate books <b>more leniently</b>, while others are <b>more critical</b>, showcasing distinct reading attitudes around the world.</p>
+      </div>
+    </div>
+    
+    <div class="chart">
+      <div class="chart-viz">
+        <div id="heatmap_reader"></div>
+      </div>
+      <div class="chart-description">
+        <h2>Genre Evolution Over Time</h2>
+        <p>The darker shades in recent decades reveal an <b>expansion in global literary output</b>, driven by easier publishing, digitalisation, and globalisation. The rise of genres like <b>Business, Science, and Computers</b> shows growing interest in modern, knowledge-driven topics, while <b>traditional genres such as History and Religion</b> remain stable but less dominant. Some genres, like <b>Fiction</b>, maintain consistent popularity, reflecting <b>long-term reader loyalty</b>. Overall, this visualisation captures <b>how literary trends evolve alongside technological and cultural shifts</b>.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div class="footer">
+    <p><strong>Author:</strong> Wong Se Lin</p>
+    <p><strong>Published:</strong> October 21, 2025</p>
+    <p><strong>Dataset:</strong> <a href="https://www.kaggle.com/datasets/ruchi798/bookcrossing-dataset" target="_blank">Book-Crossing: User review ratings</a> by Ruchi Bhatia and <a href="https://huggingface.co/datasets/rootstrap-org/books-ratings" target="_blank">Books ratings</a> by MIT </p>
+  </div>
+</div>
+
+</body>
+</html>
